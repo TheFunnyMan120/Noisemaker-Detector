@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "noisemakerdetector",
+  "version": "${version}",
+  "name": "Noisemaker Detector",
+  "description": "Detects and highlights noise-making blocks connected to redstone circuitry with ESP outlines and beacon beams.",
+  "authors": [
+    "PrecPrecise"
+  ],
+  "license": "MIT",
+  "icon": "assets/noisemakerdetector/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.precdev.noisemakerdetector.fabric.NoisemakerDetectorFabricClient"
+    ],
+    "modmenu": [
+      "com.precdev.noisemakerdetector.fabric.ModMenuIntegration"
+    ]
+  },
+  "accessWidener": "noisemakerdetector.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "fabric-api": "*",
+    "minecraft": ">=1.21.11"
+  }
+}
