@@ -13,6 +13,7 @@ public class NoisemakerDetectorFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         NoisemakerDetectorClient.init();
+        NoisemakerDetectorClient.initRenderer();
 
         // Register keybinds via Fabric API
         for (KeyMapping key : ModKeybinds.createKeyMappings()) {
