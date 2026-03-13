@@ -212,19 +212,15 @@ public class ContraptionRenderer {
             counts.merge(type, 1, Integer::sum);
         }
 
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
+        StringJoiner joiner = new StringJoiner(", ");
         for (Map.Entry<String, Integer> entry : counts.entrySet()) {
-            if (!first) sb.append(", ");
-            sb.append(entry.getValue()).append(" ").append(entry.getKey());
-            first = false;
+            joiner.add(entry.getValue() + " " + entry.getKey());
         }
 
         int redstoneCount = contraption.getRedstonePositions().size();
         if (redstoneCount > 0) {
-            sb.append(" (").append(redstoneCount).append(" redstone)");
+            return joiner + " (" + redstoneCount + " redstone)";
         }
-
-        return sb.toString();
+        return joiner.toString();
     }
 }

@@ -4,7 +4,6 @@ import com.precdev.noisemakerdetector.config.ConfigManager;
 import com.precdev.noisemakerdetector.config.ModConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -12,10 +11,7 @@ public class SettingsScreen extends Screen {
     private final Screen parent;
     private ModConfig config;
 
-    // Scroll state
-    private int scrollOffset = 0;
     private static final int LINE_HEIGHT = 24;
-    private static final int LEFT_MARGIN = 20;
 
     public SettingsScreen(Screen parent) {
         super(Component.literal("Noisemaker Detector Settings"));
@@ -130,17 +126,14 @@ public class SettingsScreen extends Screen {
         // === Color presets for beacon beam ===
         int colorBtnWidth = 45;
         int colorStartX = centerX - (colorBtnWidth * 3 + 12) / 2;
-        int[][] presets = {
-                {0xFFFF0000, 'R'}, {0xFF00FF00, 'G'}, {0xFF0000FF, 'B'},
-                {0xFFFFFF00, 'Y'}, {0xFFFF00FF, 'M'}, {0xFF00FFFF, 'C'}
-        };
-        for (int i = 0; i < presets.length; i++) {
-            final int color = presets[i][0];
-            char label = (char) presets[i][1];
+        String[] colorLabels = {"R", "G", "B", "Y", "M", "C"};
+        int[] colorValues = {0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00, 0xFFFF00FF, 0xFF00FFFF};
+        for (int i = 0; i < colorLabels.length; i++) {
+            final int color = colorValues[i];
             int bx = colorStartX + (i % 3) * (colorBtnWidth + 4);
             int by = y + (i / 3) * (LINE_HEIGHT);
             addRenderableWidget(Button.builder(
-                    Component.literal(String.valueOf(label)),
+                    Component.literal(colorLabels[i]),
                     btn -> config.beamColor = color
             ).bounds(bx, by, colorBtnWidth, 20).build());
         }

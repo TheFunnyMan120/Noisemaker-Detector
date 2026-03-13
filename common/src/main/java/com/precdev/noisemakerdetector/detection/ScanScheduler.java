@@ -16,24 +16,16 @@ public class ScanScheduler {
     public void tick(Level level, Player player) {
         tickCounter++;
 
-        int interval = ConfigManager.getConfig().scanIntervalTicks;
-        boolean shouldScan = false;
+        boolean shouldScan = forceScan
+                || tickCounter >= ConfigManager.getConfig().scanIntervalTicks
+                || player.blockPosition().distSqr(lastScanPos) >= MOVE_THRESHOLD_SQ;
 
-        if (forceScan) {
-            shouldScan = true;
-            forceScan = false;
-        } else if (tickCounter >= interval) {
-            shouldScan = true;
-        } else if (player.blockPosition().distSqr(lastScanPos) >= MOVE_THRESHOLD_SQ) {
-            shouldScan = true;
-        }
+        if (!shouldScan) return;
 
-        if (shouldScan) {
-            tickCounter = 0;
-            lastScanPos = player.blockPosition();
-            ScanResult result = scanner.scan(level, player);
-            cache.update(result);
-        }
+        forceScan = false;
+        tickCounter = 0;
+        lastScanPos = player.blockPosition();
+        cache.update(scanner.scan(level, player));
     }
 
     public void requestRescan() {
