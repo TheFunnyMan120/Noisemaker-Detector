@@ -13,7 +13,18 @@ public class NoisemakerDetectorClient {
     public static void init() {
         ConfigManager.load();
         scanScheduler = new ScanScheduler();
-        ContraptionRenderer.init(); // Force pipeline registration before shader compilation
+    }
+
+    /**
+     * Force-loads ContraptionRenderer so the custom RenderPipeline is registered
+     * before shader compilation. Must be called after mod construction but before
+     * Minecraft's initial resource reload.
+     * <p>
+     * On Fabric: call from {@code onInitializeClient()}.
+     * On NeoForge: call from {@code FMLClientSetupEvent} (fires before Minecraft init).
+     */
+    public static void initRenderer() {
+        ContraptionRenderer.init();
     }
 
     public static void onClientTick(Minecraft client) {
